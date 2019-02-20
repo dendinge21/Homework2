@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
     TextView greenText = null; //text that corresponds to green seek bar
     SeekBar blueBar = null; //blue seek bar
     TextView blueText = null; //text that corresponds to blue seek bar
-    String current; //instance variable to keep track of most recent touched feature
+    CustomDrawing current; //instance variable to keep track of most recent touched feature
     TextView nameOfDrawing; //title text
     SurfaceView drawing; //allows to invalidate
     int redValue; //the value that corresponds to red seek bar progress
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
             blueText.setText("" + progress);
             currentDrawing.setBlueValue(progress);
         }
+
 
         //invalidate it so whenever a seekbar is moved it changes the most recently
         //touched feature's color
@@ -148,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
             nameOfDrawing.setText("Sorry that is not a feature, click again!");
         }
 
+        currentDrawing.sendText(nameOfDrawing.getText().toString());
+        drawing.invalidate();
         return true;
     }
 

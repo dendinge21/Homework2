@@ -20,9 +20,19 @@ public class CustomDrawing extends SurfaceView  {
 
     //instance variables
     private String current="";
+    //seekbar progress values
     private int redValue;
     private int greenValue;
     private int blueValue;
+
+    //paints for every object so it saves it
+    protected Paint houseColor = new Paint();
+    protected Paint roofColor = new Paint();
+    protected Paint bushColor = new Paint();
+    protected Paint mailBoxColor = new Paint();
+    protected Paint hydrantColor = new Paint();
+    protected Paint doorColor = new Paint();
+    protected Paint windowColor = new Paint();
 
     public CustomDrawing(Context context) {
         super(context);
@@ -56,98 +66,157 @@ public class CustomDrawing extends SurfaceView  {
         //set background to white
         canvas.drawColor(0xFFFFFFFF);
 
-        //create a black paint color that does not fill the drawing
-        Paint blackPaint = new Paint();
-        blackPaint.setColor(0xFF000000);
-        blackPaint.setStyle(Paint.Style.STROKE);
-        blackPaint.setStrokeWidth(5.0f);
-
-        //create a brown paint
-        Paint brownPaint = new Paint();
-        brownPaint.setColor(0xFFA52A2A);
-
-        //create blue paint
-        Paint bluePaint = new Paint();
-        bluePaint.setColor(0xFF0000FF);
-
-        //create yellow paint
-        Paint yellowPaint = new Paint();
-        yellowPaint.setColor(0xFFFFFF00);
-
-        //using the values from the seekBars, create a paint that does not fill the drawing
-        Paint seekBarPaint = new Paint();
-        seekBarPaint.setColor(Color.rgb(redValue,greenValue,blueValue));
-        seekBarPaint.setStyle(Paint.Style.STROKE);
-        seekBarPaint.setStrokeWidth(5.0f);
-
-        //using the values from the seekBars, create a paint that fills the drawing
-        Paint fillSeekBarPaint = new Paint();
-        fillSeekBarPaint.setColor(Color.rgb(redValue,greenValue,blueValue));
-
-        /**
-         *For each feature if its the most recently touched feature than set the color
-         * to the paint that corresponds to the seek bar values
-         */
-        //draw the house
-        if(current.equals("house")){
-            drawHouse(canvas, seekBarPaint);
+        //at the start initialize the drawing, all to the starting
+        // black paint, if its not the very beginning,
+        //update the drawing to what the user has set the colors
+        //to
+        if(redValue < 1 && greenValue <1 && blueValue <1){
+            initDrawing(canvas);
         }
         else{
-            drawHouse(canvas,blackPaint);
+            updateDrawing(canvas);
         }
 
-        //draw the roof
-        if(current.equals("roof")){
-            drawRoof(canvas, fillSeekBarPaint);
-        }
-        else{
-            drawRoof(canvas, brownPaint);
-        }
+    }
 
-        //drawing the windows
-        if(current.equals("window")){
-            drawWindows(canvas, seekBarPaint);
-        }
-        else{
-            drawWindows(canvas, blackPaint);
-        }
+    public void updateDrawing(Canvas canvas){
 
-        //drawing the door
-        if(current.equals("door")){
-            drawDoor(canvas,seekBarPaint);
+        //black paint that does not fill
+        Paint blackStartPaint = new Paint();
+        blackStartPaint.setColor(0xFF000000);
+        blackStartPaint.setStyle(Paint.Style.STROKE);
+        blackStartPaint.setStrokeWidth(5.0f);
+
+        //if the current draw is equal to an object then
+        //set that obkects color to the progress of the
+        //seek bars, and the rest to the initial black paint
+
+        if(current.equals("House")){
+            houseColor.setColor(Color.rgb(redValue,greenValue,blueValue));
+            houseColor.setStyle(Paint.Style.STROKE);
+            houseColor.setStrokeWidth(5.0f);
+            drawHouse(canvas, houseColor);
+            drawDoor(canvas, blackStartPaint);
+            drawHydrant(canvas, blackStartPaint);
+            drawMailBox(canvas, blackStartPaint);
+            drawBush(canvas, blackStartPaint);
+            drawWindows(canvas, blackStartPaint);
+            drawRoof(canvas,blackStartPaint);
+        }
+        else if (current.equals("Roof")){
+            roofColor.setColor(Color.rgb(redValue,greenValue,blueValue));
+            drawRoof(canvas, roofColor);
+            drawHouse(canvas, blackStartPaint);
+            drawDoor(canvas, blackStartPaint);
+            drawHydrant(canvas, blackStartPaint);
+            drawMailBox(canvas, blackStartPaint);
+            drawBush(canvas, blackStartPaint);
+            drawWindows(canvas, blackStartPaint);
+        }
+        else if(current.equals("Door")){
+            doorColor.setColor(Color.rgb(redValue,greenValue,blueValue));
+            doorColor.setStyle(Paint.Style.STROKE);
+            doorColor.setStrokeWidth(5.0f);
+            drawRoof(canvas, blackStartPaint);
+            drawHouse(canvas, blackStartPaint);
+            drawDoor(canvas, doorColor);
+            drawHydrant(canvas, blackStartPaint);
+            drawMailBox(canvas, blackStartPaint);
+            drawBush(canvas, blackStartPaint);
+            drawWindows(canvas, blackStartPaint);
+        }
+        else if(current.equals("Fire Hydrant")){
+            hydrantColor.setColor(Color.rgb(redValue,greenValue,blueValue));
+            drawRoof(canvas, blackStartPaint);
+            drawHouse(canvas, blackStartPaint);
+            drawDoor(canvas, blackStartPaint);
+            drawHydrant(canvas, hydrantColor);
+            drawMailBox(canvas, blackStartPaint);
+            drawBush(canvas, blackStartPaint);
+            drawWindows(canvas, blackStartPaint);
+        }
+        else if(current.equals("MailBox")){
+            mailBoxColor.setColor(Color.rgb(redValue,greenValue,blueValue));
+            drawRoof(canvas, blackStartPaint);
+            drawHouse(canvas, blackStartPaint);
+            drawDoor(canvas, blackStartPaint);
+            drawHydrant(canvas, blackStartPaint);
+            drawMailBox(canvas, mailBoxColor);
+            drawBush(canvas, blackStartPaint);
+            drawWindows(canvas, blackStartPaint);
+        }
+        else if(current.equals("Bush")){
+            bushColor.setColor(Color.rgb(redValue,greenValue,blueValue));
+            drawRoof(canvas, blackStartPaint);
+            drawHouse(canvas, blackStartPaint);
+            drawDoor(canvas, blackStartPaint);
+            drawHydrant(canvas, blackStartPaint);
+            drawMailBox(canvas, blackStartPaint);
+            drawBush(canvas, bushColor);
+            drawWindows(canvas, blackStartPaint);
+        }
+        else if(current.equals("Window")){
+            windowColor.setColor(Color.rgb(redValue,greenValue,blueValue));
+            windowColor.setStyle(Paint.Style.STROKE);
+            windowColor.setStrokeWidth(5.0f);
+            drawRoof(canvas, blackStartPaint);
+            drawHouse(canvas, blackStartPaint);
+            drawDoor(canvas, blackStartPaint);
+            drawHydrant(canvas, blackStartPaint);
+            drawMailBox(canvas, blackStartPaint);
+            drawBush(canvas, blackStartPaint);
+            drawWindows(canvas, windowColor);
         }
         else {
-            drawDoor(canvas, blackPaint);
+            initDrawing(canvas);
+        }
+    }
+
+    public void initDrawing(Canvas canvas){
+        //set background to white
+        canvas.drawColor(0xFFFFFFFF);
+
+        //create a black paint that does not fill
+        Paint blackStartPaint = new Paint();
+        blackStartPaint.setColor(0xFF000000);
+        blackStartPaint.setStyle(Paint.Style.STROKE);
+        blackStartPaint.setStrokeWidth(5.0f);
+
+        //if the values of seek bars are at 0 then set to black
+        //paint this is for initial drawing when app opens
+        if(redValue < 1 && blueValue < 1 && greenValue <1) {
+            this.houseColor.setColor(blackStartPaint.getColor());
+            this.houseColor.setStyle(Paint.Style.STROKE);
+            this.houseColor.setStrokeWidth(5.0f);
+            this.windowColor.setColor(blackStartPaint.getColor());
+            this.windowColor.setStyle(Paint.Style.STROKE);
+            this.windowColor.setStrokeWidth(5.0f);
+            this.roofColor.setColor(blackStartPaint.getColor());
+            this.roofColor.setStyle(Paint.Style.STROKE);
+            this.roofColor.setStrokeWidth(5.0f);
+            this.bushColor.setColor(blackStartPaint.getColor());
+            this.bushColor.setStyle(Paint.Style.STROKE);
+            this.bushColor.setStrokeWidth(5.0f);
+            this.doorColor.setColor(blackStartPaint.getColor());
+            this.doorColor.setStyle(Paint.Style.STROKE);
+            this.doorColor.setStrokeWidth(5.0f);
+            this.hydrantColor.setColor(blackStartPaint.getColor());
+            this.hydrantColor.setStyle(Paint.Style.STROKE);
+            this.hydrantColor.setStrokeWidth(5.0f);
+            this.mailBoxColor.setColor(blackStartPaint.getColor());
+            this.mailBoxColor.setStyle(Paint.Style.STROKE);
+            this.mailBoxColor.setStrokeWidth(5.0f);
         }
 
-        //drawing bush
-        Paint greenPaint = new Paint();
-        greenPaint.setColor(0xFF00FF00);
-
-        if(current.equals("bush")){
-            drawBush(canvas, fillSeekBarPaint);
-        }
-        else{
-            drawBush(canvas, greenPaint);
-        }
-
-
-        //draw mailbox
-        if(current.equals("mailbox")){
-            drawMailBox(canvas,fillSeekBarPaint);
-        }
-        else{
-            drawMailBox(canvas,bluePaint);
-        }
-
-        //draw fire hydrant
-        if(current.equals("fire")){
-            drawHydrant(canvas, fillSeekBarPaint);
-        }
-        else{
-            drawHydrant(canvas, yellowPaint);
-        }
-
+        //if seek bars do not equal 0 then set to respective
+        //features colors
+        drawHouse(canvas, houseColor);
+        drawWindows(canvas, windowColor);
+        drawRoof(canvas, roofColor);
+        drawBush(canvas, bushColor);
+        drawDoor(canvas, doorColor);
+        drawHydrant(canvas, hydrantColor);
+        drawMailBox(canvas, mailBoxColor);
 
     }
 
@@ -285,5 +354,14 @@ public class CustomDrawing extends SurfaceView  {
         canvas.drawCircle(1425.0f, 900.0f, 25.0f, paint );
     }
 
+    /**
+     * SendText gets the name of object that is most
+     * recently touched from the activity class
+     * @param nameOfObject - name of feature that was
+     *                     just touched
+     */
+    public void sendText(String nameOfObject){
+        this.current = nameOfObject;
+    }
 }
 
