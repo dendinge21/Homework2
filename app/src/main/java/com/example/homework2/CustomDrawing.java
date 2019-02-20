@@ -82,6 +82,11 @@ public class CustomDrawing extends SurfaceView  {
 
     }
 
+    /**
+     * updateDrawing - sets the color of the features
+     * dependent on what is the most recently touched
+     * @param canvas - canvas that draws on
+     */
     public void updateDrawing(Canvas canvas){
 
         //black paint that does not fill
@@ -174,6 +179,22 @@ public class CustomDrawing extends SurfaceView  {
             initDrawing(canvas);
         }
     }
+    /** External Citation
+     * Date: February 19th 2019
+     * Problem: could not get the color to save so that it
+     * would continue to draw that feature in the specified color
+     * after another feature was clicked and changed/
+     * Resource: Ben Pirkl
+     * Solution: he guided me through the process of having instance variables
+     * for every features color. 
+     */
+
+    /**
+     * InitDrawing- initiates the drawing to all black paint
+     * once the app starts up or initializes all the colors to
+     * the updated color
+     * @param canvas- canvas to draw on
+     */
 
     public void initDrawing(Canvas canvas){
         //set background to white
