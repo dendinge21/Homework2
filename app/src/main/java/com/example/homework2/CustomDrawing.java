@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+/**
+ * Draws the features dependent on the state of the seek bars
+ */
 public class CustomDrawing extends SurfaceView  {
 
     //instance variables

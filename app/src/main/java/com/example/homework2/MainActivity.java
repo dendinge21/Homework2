@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+/**
+ * Main Activity sets the layout and manages events
+ * @Author Olivia Dendinger
+ * @Date February 19th, 2019
+ */
 public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
     SeekBar redBar = null; //red seek bar
     TextView redText = null; // text that corresponds to red seek bar
